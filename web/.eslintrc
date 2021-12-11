@@ -1,0 +1,32 @@
+{
+  "extends" : ["@visionappscz/eslint-config-visionapps"],
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "WasmModule": true
+  },
+  "ignorePatterns": [
+    "src/main.jsx",
+    "src/wasm/module/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/index.js",
+        "src/constants/**/*"
+      ],
+      "rules": {
+        "import/prefer-default-export": "off"
+      }
+    },
+    {
+      "files": [
+        "src/wasm/**/*"
+      ],
+      "rules": {
+        "no-underscore-dangle": "off"
+      }
+    }
+  ]
+}
