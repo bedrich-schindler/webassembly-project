@@ -13,5 +13,6 @@ npm install
 echo "> Building web application"
 npm run build
 
-echo "> Starting web application"
-npm start
+echo "> Deploying web application"
+cd ./build/
+surge . webassembly-project.bedrich-schindler.surge.sh
