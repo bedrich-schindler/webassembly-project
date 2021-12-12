@@ -25,6 +25,7 @@
         "src/wasm/**/*"
       ],
       "rules": {
+        "new-cap": "off",
         "no-underscore-dangle": "off"
       }
     }
