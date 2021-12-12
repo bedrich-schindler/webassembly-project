@@ -1,7 +1,19 @@
-import WordCounter from '../../../wasm/classes/WordCounter';
+import WordCounter from '../wasm/classes/WordCounter';
+import createWasmModule from '../wasm/module/wasm';
 
-export default (fileContent, isCaseSensitive, isAlphaNumericalOnly, setWordCounterData) => () => {
+/**
+ * This worker accepts file on which WordCounter is executed and result is posted back to the worker executor.
+ */
+addEventListener('message', async ({ data }) => {
+  const {
+    fileContent,
+    isAlphaNumericalOnly,
+    isCaseSensitive,
+  } = data;
   const fileName = 'wordCounterFata.txt';
+
+  // Create WasmModule and make it accessible globally
+  self.WasmModule = await createWasmModule();
 
   // Create file in WASM file system with specified content
   WasmModule.FS.writeFile(fileName, fileContent);
@@ -22,7 +34,7 @@ export default (fileContent, isCaseSensitive, isAlphaNumericalOnly, setWordCount
   }
 
   if (isFailed) {
-    setWordCounterData({
+    postMessage({
       characterOccurrences: [],
       isEmpty: false,
       isFailed: true,
@@ -36,7 +48,7 @@ export default (fileContent, isCaseSensitive, isAlphaNumericalOnly, setWordCount
   const totalWords = wordCounter.get_total_word_count();
 
   if (totalWords === 0) {
-    setWordCounterData({
+    postMessage({
       characterOccurrences: [],
       isEmpty: true,
       isFailed: false,
@@ -71,11 +83,11 @@ export default (fileContent, isCaseSensitive, isAlphaNumericalOnly, setWordCount
   wordCounter.clear();
   wordCounter.delete();
 
-  setWordCounterData({
+  postMessage({
     characterOccurrences,
     isEmpty: false,
     isFailed: false,
     totalWords,
     wordOccurrences,
   });
-};
+});

@@ -20,6 +20,15 @@ module.exports = () => ({
   module: {
     rules: [
       {
+        test: /\.worker\.js$/,
+        use: {
+          loader: 'worker-loader',
+          options: {
+            filename: "[name].js",
+          }
+        },
+      },
+      {
         exclude: /node_modules/,
         test: /\.(js|jsx)$/,
         use: [{ loader: 'babel-loader' }],
@@ -43,6 +52,17 @@ module.exports = () => ({
               sassOptions: {
                 includePaths: ['node_modules'],
               },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
             },
           },
         ],

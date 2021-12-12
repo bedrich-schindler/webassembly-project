@@ -14,7 +14,7 @@ import store from './store';
 import app from './app';
 
 // Create WebAssembly module and make it global
-window.WasmModule = await createWasmModule();
+self.WasmModule = await createWasmModule();
 
 render(
   app(store, history),

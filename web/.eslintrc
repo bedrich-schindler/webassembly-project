@@ -14,7 +14,8 @@
     {
       "files": [
         "**/index.js",
-        "src/constants/**/*"
+        "src/constants/**/*",
+        "src/services/**/*"
       ],
       "rules": {
         "import/prefer-default-export": "off"
@@ -27,6 +28,14 @@
       "rules": {
         "new-cap": "off",
         "no-underscore-dangle": "off"
+      }
+    },
+    {
+      "files": [
+        "src/workers/**/*"
+      ],
+      "rules": {
+        "no-restricted-globals": "off"
       }
     }
   ]

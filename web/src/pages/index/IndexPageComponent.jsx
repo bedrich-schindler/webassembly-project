@@ -10,8 +10,10 @@ import {
   Toggle,
   FormLayoutCustomField,
 } from '@react-ui-org/react-ui';
+import { LoadingIcon } from '../../components/LoadingIcon';
+import { executeWorker } from '../../services/workerService/executeWorker';
+import WordCounterWorker from '../../workers/executeWordCounter.worker';
 import onFileChanged from './helpers/onFileChanged';
-import processFile from './helpers/processFile';
 import styles from './styles.scss';
 
 const IndexPageComponent = () => {
@@ -25,6 +27,7 @@ const IndexPageComponent = () => {
     totalWords: 0,
     wordOccurrences: [],
   });
+  const [wordCounterRunning, setWordCounterRunning] = useState(false);
 
   return (
     <div className={styles.root}>
@@ -116,8 +119,17 @@ const IndexPageComponent = () => {
           </FormLayoutCustomField>
           <Button
             disabled={fileContent === null}
+            feedbackIcon={wordCounterRunning && <LoadingIcon />}
             label="Process"
-            onClick={processFile(fileContent, isCaseSensitive, isAlphaNumericalOnly, setWordCounterData)}
+            onClick={async () => {
+              setWordCounterRunning(true);
+              setWordCounterData(await executeWorker(WordCounterWorker, {
+                fileContent,
+                isAlphaNumericalOnly,
+                isCaseSensitive,
+              }));
+              setWordCounterRunning(false);
+            }}
           />
         </FormLayout>
       </form>
