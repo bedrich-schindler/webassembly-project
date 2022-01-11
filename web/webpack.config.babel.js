@@ -1,4 +1,5 @@
 const Path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
@@ -78,6 +79,11 @@ module.exports = () => ({
     hints: false,
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: Path.resolve(__dirname, 'src/assets/word-counter-example-file.txt') },
+      ],
+    }),
     new StyleLintPlugin({
       configFile: 'stylelint.config.js',
       syntax: 'scss',

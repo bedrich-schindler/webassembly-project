@@ -17,3 +17,13 @@ To build and run the project use `bash ./run.sh` command.
 ## Deploy
 
 To deploy web application to http://webassembly-project.bedrich-schindler.surge.sh/, run `bash ./deploy.sh` command.
+
+## Information about C++ and WebAssembly files
+
+* [cpp/src/wasm_example.hpp](cpp/src/wasm_example.hpp): Contains basic example implementation of C functions
+* [cpp/src/wasm_word_counter.hpp](cpp/src/wasm_word_counter.hpp): Contains mapping of external C++ library Word Counter using Emscripten Bind
+* [cpp/src/wasm_cimg.hpp](cpp/src/wasm_cimg.hpp): Contains facede-style mapping of external C++ library CImg using Emscripten Bind
+
+
+* [cpp/external/cimg](cpp/external/cimg): External C++ library CImg
+* [cpp/external/word-counter](cpp/external/word-counter): External C++ library Word Counter

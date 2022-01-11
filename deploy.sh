@@ -15,4 +15,5 @@ npm run build
 
 echo "> Deploying web application"
 cd ./build/
+cp ./index.html ./200.html
 surge . webassembly-project.bedrich-schindler.surge.sh

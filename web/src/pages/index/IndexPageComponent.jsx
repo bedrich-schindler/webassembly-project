@@ -1,138 +1,73 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import {
-  Alert,
   Button,
-  FormLayout,
+  Card,
+  CardBody,
+  CardFooter,
   Grid,
-  Paper,
-  Table,
-  ScrollView,
-  Toggle,
-  FormLayoutCustomField,
+  Link,
 } from '@react-ui-org/react-ui';
-import { LoadingIcon } from '../../components/LoadingIcon';
-import { executeWorker } from '../../services/workerService/executeWorker';
-import WordCounterWorker from '../../workers/executeWordCounter.worker';
-import onFileChanged from './helpers/onFileChanged';
+import routes from '../../routes';
 import styles from './styles.scss';
 
 const IndexPageComponent = () => {
-  const [isCaseSensitive, setCaseSensitive] = useState(false);
-  const [isAlphaNumericalOnly, setAlphaNumericalOnly] = useState(false);
-  const [fileContent, setFileContent] = useState(null);
-  const [wordCounterData, setWordCounterData] = useState({
-    characterOccurrences: [],
-    isEmpty: false,
-    isFailed: false,
-    totalWords: 0,
-    wordOccurrences: [],
-  });
-  const [wordCounterRunning, setWordCounterRunning] = useState(false);
+  const history = useHistory();
 
   return (
     <div className={styles.root}>
       <h1 className="typography-size-5">
-        C++ ASCII Word Counter
+        WebAssembly Example Applications
       </h1>
-      {wordCounterData.isFailed && (
-        <div className="mb-5">
-          <Alert color="danger">
-            <strong>Error: </strong>
-            We were unable to process file. Please be aware that files with only ASCII characters can be processed.
-          </Alert>
-        </div>
-      )}
-      {wordCounterData.isEmpty && (
-        <div className="mb-5">
-          <Alert color="info">
-            <strong>Info: </strong>
-            Processed file is empty or it is not plain text file.
-          </Alert>
-        </div>
-      )}
-      <p>
-        Words:
-        {wordCounterData.totalWords}
-      </p>
       <Grid
         columns={{
-          md: '2fr 1fr',
+          lg: '1fr 1fr',
           xs: '1fr',
         }}
       >
-        <Paper>
-          <div className={styles.scrollableTable}>
-            <ScrollView direction="vertical">
-              <Table
-                columns={[
-                  {
-                    label: 'Word',
-                    name: 'id',
-                  },
-                  {
-                    label: 'Occurrences',
-                    name: 'value',
-                  },
-                ]}
-                rows={wordCounterData.wordOccurrences}
-              />
-            </ScrollView>
-          </div>
-        </Paper>
-        <Paper>
-          <div className={styles.scrollableTable}>
-            <ScrollView direction="vertical">
-              <Table
-                columns={[
-                  {
-                    label: 'Character',
-                    name: 'id',
-                  },
-                  {
-                    label: 'Occurrences',
-                    name: 'value',
-                  },
-                ]}
-                rows={wordCounterData.characterOccurrences}
-              />
-            </ScrollView>
-          </div>
-        </Paper>
-      </Grid>
-      <form className="mt-5">
-        <FormLayout autoWidth>
-          <Toggle
-            checked={isAlphaNumericalOnly}
-            label="Alphanumerical characters only"
-            onChange={() => setAlphaNumericalOnly(!isAlphaNumericalOnly)}
-          />
-          <Toggle
-            checked={isCaseSensitive}
-            label="Case sensitive"
-            onChange={() => setCaseSensitive(!isCaseSensitive)}
-          />
-          <FormLayoutCustomField>
-            <input
-              onChange={onFileChanged(setFileContent)}
-              type="file"
+        <Card>
+          <CardBody>
+            <h2 className="typography-size-3">Image Editor</h2>
+            <p>
+              Image Editor is based on C++ library CImg. CImg library supports huge amount of operations,
+              therefore WebAssembly part of C++ is implemented as facade and exports only necessary functions
+              used by Image Editor.
+            </p>
+          </CardBody>
+          <CardFooter>
+            <Button
+              label="Open Image Editor"
+              onClick={() => history.push(routes.image_editor)}
+              priority="outline"
             />
-          </FormLayoutCustomField>
-          <Button
-            disabled={fileContent === null}
-            feedbackIcon={wordCounterRunning && <LoadingIcon />}
-            label="Process"
-            onClick={async () => {
-              setWordCounterRunning(true);
-              setWordCounterData(await executeWorker(WordCounterWorker, {
-                fileContent,
-                isAlphaNumericalOnly,
-                isCaseSensitive,
-              }));
-              setWordCounterRunning(false);
-            }}
-          />
-        </FormLayout>
-      </form>
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardBody>
+            <h2 className="typography-size-3">ASCII Word Counter</h2>
+            <p>
+              ASCII Word counter is based on lightweight C++ library of the same name. It calls C++ class functions
+              through WebAssembly directly without any facade or wrapping code. Only ASCII characters are supported.
+              To test ASCII Word Counter, download
+              {' '}
+              <Link
+                download
+                href="/generated/word-counter-example-file.txt"
+              >
+                example text file
+              </Link>
+              .
+            </p>
+          </CardBody>
+          <CardFooter>
+            <Button
+              label="Open Word Counter"
+              onClick={() => history.push(routes.word_counter)}
+              priority="outline"
+            />
+          </CardFooter>
+        </Card>
+      </Grid>
     </div>
   );
 };

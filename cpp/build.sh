@@ -12,8 +12,10 @@ em++ ./src/library.cpp \
   -s ENVIRONMENT=web \
   -s MODULARIZE=1 \
   -s EXPORT_ES6=1 \
+  -s USE_SDL=2 -s USE_SDL_IMAGE=2 \
+  -s SDL2_IMAGE_FORMATS='["jpg", "png", "gif"]' \
   -s EXPORTED_FUNCTIONS="['_malloc', '_free']" \
-  -s EXPORTED_RUNTIME_METHODS="['FS']" \
+  -s EXPORTED_RUNTIME_METHODS="['FS', 'allocate', 'intArrayFromString', 'ALLOC_NORMAL']" \
   -s ALLOW_MEMORY_GROWTH=1
 
 mkdir -p ../web/src/wasm/module/
