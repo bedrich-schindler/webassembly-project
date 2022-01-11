@@ -82,6 +82,7 @@ module.exports = () => ({
     new CopyPlugin({
       patterns: [
         { from: Path.resolve(__dirname, 'src/assets/word-counter-example-file.txt') },
+        { from: Path.resolve(__dirname, 'src/assets/wav-example-file.wav') },
       ],
     }),
     new StyleLintPlugin({

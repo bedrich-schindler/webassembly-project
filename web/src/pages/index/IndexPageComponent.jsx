@@ -44,6 +44,30 @@ const IndexPageComponent = () => {
         </Card>
         <Card>
           <CardBody>
+            <h2 className="typography-size-3">Audio Playground</h2>
+            <p>
+              Audio Playground is based on C++ library AudioFile and allows you to get information about uploaded
+              file and play it. It also contains Tone Generator. To test it, download
+              {' '}
+              <Link
+                download
+                href="/generated/wav-example-file.wav"
+              >
+                example WAV audio file
+              </Link>
+              .
+            </p>
+          </CardBody>
+          <CardFooter>
+            <Button
+              label="Open Audio Editor"
+              onClick={() => history.push(routes.audio_playground)}
+              priority="outline"
+            />
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardBody>
             <h2 className="typography-size-3">ASCII Word Counter</h2>
             <p>
               ASCII Word counter is based on lightweight C++ library of the same name. It calls C++ class functions

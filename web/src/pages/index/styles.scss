@@ -1,6 +1,10 @@
 .root {
-  padding: 2.5em;
+  padding: 1.5em;
   color: #131313;
+
+  @media (min-width: 480px) {
+    padding: 2.5em;
+  }
 }
 
 .scrollableTable {

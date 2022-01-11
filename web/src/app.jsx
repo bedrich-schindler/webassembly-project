@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import { RUIProvider } from './components/RUIProvider';
+import { AudioPlaygroundPage } from './pages/audioPlayground';
 import { IndexPage } from './pages/index';
 import { ImageEditorPage } from './pages/imageEditor';
 import { WordCounterPage } from './pages/wordCounter';
@@ -21,6 +22,12 @@ export default (store, history) => (
             children={(routerProps) => <IndexPage {...routerProps} />}
             exact
             path={routes.index}
+          />
+          <Route
+            // eslint-disable-next-line react/no-children-prop
+            children={(routerProps) => <AudioPlaygroundPage {...routerProps} />}
+            exact
+            path={routes.audio_playground}
           />
           <Route
             // eslint-disable-next-line react/no-children-prop
